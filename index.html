@@ -6,6 +6,7 @@
   <meta name="description" content="Ассистент закупщика для ресторана: за пару кликов формируем закупку, подтягиваем прайсы, находим лучшие предложения, собираем оптимальные корзины и рассылаем заявки поставщикам." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://iirest.ru/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23635fff'/%3E%3Cstop offset='1' stop-color='%239d8bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23f2efff'/%3E%3C/svg%3E" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="iirest — ассистент закупщика" />
@@ -18,19 +19,19 @@
     @import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
 
     :root{
-      --bg:#f5f7fb;
+      --bg:#f3f4ff;
       --bg2:#ffffff;
       --card:#ffffff;
-      --card2:#f2f5ff;
-      --stroke:#dfe5f3;
-      --text:#0f172a;
-      --muted:#5b6780;
-      --muted2:#7a869f;
-      --accent:#2fbf9b;
-      --accent2:#6a5cff;
-      --good:#16a34a;
+      --card2:#f0f2ff;
+      --stroke:#d9ddf5;
+      --text:#1a1f36;
+      --muted:#5c607a;
+      --muted2:#7a7f9c;
+      --accent:#5f5bff;
+      --accent2:#8d7bff;
+      --good:#6f6bff;
       --warn:#f59e0b;
-      --shadow: 0 20px 50px rgba(15,23,42,.12);
+      --shadow: 0 22px 60px rgba(40,45,90,.15);
       --radius:20px;
       --radius2:26px;
       --max: 1120px;
@@ -43,15 +44,15 @@
       font-family: "Onest", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 600px at 15% 10%, rgba(47,191,155,.16), transparent 60%),
-        radial-gradient(900px 600px at 85% 0%, rgba(106,92,255,.14), transparent 60%),
-        radial-gradient(1200px 700px at 60% 100%, rgba(148,163,184,.18), transparent 60%),
+        radial-gradient(900px 600px at 15% 10%, rgba(95,91,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(141,123,255,.16), transparent 60%),
+        radial-gradient(1200px 700px at 60% 100%, rgba(170,176,220,.22), transparent 60%),
         linear-gradient(180deg, var(--bg), var(--bg2));
       background-image:
         url("data:image/svg+xml,%3Csvg width='220' height='220' viewBox='0 0 220 220' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='220' height='220' fill='white'/%3E%3Cpath d='M0 110h220M110 0v220' stroke='%23e2e8f0' stroke-width='1'/%3E%3Ccircle cx='110' cy='110' r='60' stroke='%23e2e8f0' stroke-width='1'/%3E%3C/svg%3E"),
-        radial-gradient(900px 600px at 15% 10%, rgba(47,191,155,.16), transparent 60%),
-        radial-gradient(900px 600px at 85% 0%, rgba(106,92,255,.14), transparent 60%),
-        radial-gradient(1200px 700px at 60% 100%, rgba(148,163,184,.18), transparent 60%),
+        radial-gradient(900px 600px at 15% 10%, rgba(95,91,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(141,123,255,.16), transparent 60%),
+        radial-gradient(1200px 700px at 60% 100%, rgba(170,176,220,.22), transparent 60%),
         linear-gradient(180deg, var(--bg), var(--bg2));
       background-repeat: repeat;
       line-height:1.55;
@@ -69,12 +70,12 @@
       font-size:14px;
       box-shadow: 0 10px 25px rgba(15,23,42,.06);
     }
-    .dot{width:8px; height:8px; border-radius:99px; background:var(--good); box-shadow:0 0 0 4px rgba(22,163,74,.16)}
+    .dot{width:8px; height:8px; border-radius:99px; background:var(--accent); box-shadow:0 0 0 4px rgba(95,91,255,.18)}
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(14px);
-      background:rgba(255,255,255,.9);
-      border-bottom:1px solid rgba(15,23,42,.08);
+      background:rgba(249,249,255,.9);
+      border-bottom:1px solid rgba(95,91,255,.14);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
@@ -87,11 +88,11 @@
     .logo{
       width:34px; height:34px; border-radius:12px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(47,191,155,.95), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(106,92,255,.85), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(95,91,255,.9), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(141,123,255,.9), transparent 60%),
         rgba(255,255,255,.9);
-      border:1px solid rgba(15,23,42,.12);
-      box-shadow: 0 12px 26px rgba(15,23,42,.16);
+      border:1px solid rgba(95,91,255,.2);
+      box-shadow: 0 14px 30px rgba(95,91,255,.24);
     }
     .brand small{display:block; font-weight:600; color:var(--muted2); letter-spacing:0}
     .menu{display:flex; gap:18px; align-items:center}
@@ -119,11 +120,11 @@
     .btn:hover{background:#f4f6ff; border-color:rgba(15,23,42,.18)}
     .btn:active{transform: translateY(1px)}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(47,191,155,.25), rgba(106,92,255,.25));
-      border-color: rgba(47,191,155,.4);
-      box-shadow: 0 18px 45px rgba(47,191,155,.18);
+      background: linear-gradient(135deg, rgba(95,91,255,.2), rgba(141,123,255,.25));
+      border-color: rgba(95,91,255,.4);
+      box-shadow: 0 18px 45px rgba(95,91,255,.22);
     }
-    .btn.primary:hover{border-color: rgba(47,191,155,.6)}
+    .btn.primary:hover{border-color: rgba(95,91,255,.6)}
     .btn.ghost{background:transparent}
     .btn.small{padding:10px 12px; font-weight:800; border-radius:12px; font-size:14px}
 
@@ -154,7 +155,7 @@
     .bullets li{
       display:flex; gap:10px; align-items:flex-start;
       padding:10px 12px;
-      border:1px solid rgba(15,23,42,.08);
+      border:1px solid rgba(95,91,255,.12);
       background:#ffffff;
       border-radius:14px;
       color:var(--muted);
@@ -164,8 +165,8 @@
     .check{
       width:18px; height:18px; flex:0 0 auto;
       border-radius:6px;
-      background:rgba(22,163,74,.12);
-      border:1px solid rgba(22,163,74,.35);
+      background:rgba(95,91,255,.12);
+      border:1px solid rgba(95,91,255,.35);
       display:grid; place-items:center;
       margin-top:2px;
     }
@@ -182,15 +183,15 @@
 
     .mock{
       border-radius: var(--radius2);
-      border:1px solid rgba(15,23,42,.10);
+      border:1px solid rgba(95,91,255,.18);
       background:
-        linear-gradient(135deg, rgba(47,191,155,.10), transparent 55%),
-        linear-gradient(320deg, rgba(106,92,255,.10), transparent 55%),
+        linear-gradient(135deg, rgba(95,91,255,.12), transparent 55%),
+        linear-gradient(320deg, rgba(141,123,255,.12), transparent 55%),
         #ffffff;
       background-image:
-        url("data:image/svg+xml,%3Csvg width='240' height='160' viewBox='0 0 240 160' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='240' height='160' rx='20' fill='%23ffffff'/%3E%3Cpath d='M24 120c20-32 52-48 86-44 24 2 32 14 56 14 22 0 36-10 50-24' stroke='%23cbd5f5' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='38' cy='38' r='18' fill='%23dff7ef'/%3E%3Ccircle cx='208' cy='42' r='16' fill='%23e7e5ff'/%3E%3C/svg%3E"),
-        linear-gradient(135deg, rgba(47,191,155,.10), transparent 55%),
-        linear-gradient(320deg, rgba(106,92,255,.10), transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='240' height='160' viewBox='0 0 240 160' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='240' height='160' rx='20' fill='%23ffffff'/%3E%3Cpath d='M24 120c20-32 52-48 86-44 24 2 32 14 56 14 22 0 36-10 50-24' stroke='%23cbd5f5' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='38' cy='38' r='18' fill='%23e9e5ff'/%3E%3Ccircle cx='208' cy='42' r='16' fill='%23e7e5ff'/%3E%3C/svg%3E"),
+        linear-gradient(135deg, rgba(95,91,255,.12), transparent 55%),
+        linear-gradient(320deg, rgba(141,123,255,.12), transparent 55%),
         #ffffff;
       background-repeat: no-repeat;
       background-position: right 12px top 16px;
@@ -200,7 +201,7 @@
     .mock .top{
       display:flex; justify-content:space-between; align-items:center;
       padding:14px 16px;
-      border-bottom:1px solid rgba(15,23,42,.08);
+      border-bottom:1px solid rgba(95,91,255,.12);
       color:var(--muted);
       font-size:13px;
     }
@@ -216,32 +217,39 @@
       padding:12px;
       border-radius:16px;
       background:#ffffff;
-      border:1px solid rgba(15,23,42,.08);
+      border:1px solid rgba(95,91,255,.12);
     }
     .kpi .card b{display:block; font-size:16px}
     .kpi .card span{color:var(--muted); font-size:13px}
-    .table{
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.08);
-      overflow:hidden;
-      background:#f8fafc;
-    }
-    .row{
+    .insights{
       display:grid;
-      grid-template-columns: 1.4fr .7fr .7fr;
       gap:10px;
+      margin-top:8px;
+    }
+    .insights .item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
       padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(95,91,255,.12);
+      background:#f6f7ff;
       font-size:13px;
       color:var(--muted);
-      border-top:1px solid rgba(15,23,42,.08);
     }
-    .row.head{
-      border-top:none;
-      color:rgba(15,23,42,.86);
-      background:#eef2ff;
+    .insights .item strong{color:var(--text)}
+    .insights .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(95,91,255,.12);
+      color:var(--accent);
       font-weight:800;
+      font-size:12px;
     }
-    .price{color:#1d4ed8; font-weight:800}
     .tag{
       display:inline-flex; align-items:center; gap:8px;
       padding:7px 10px;
@@ -272,17 +280,17 @@
       padding:16px;
       border-radius: var(--radius);
       background: var(--card);
-      border:1px solid rgba(15,23,42,.08);
-      box-shadow: 0 12px 28px rgba(15,23,42,.06);
+      border:1px solid rgba(95,91,255,.12);
+      box-shadow: 0 12px 28px rgba(95,91,255,.08);
     }
-    .card:hover{border-color: rgba(15,23,42,.18); background: var(--card2)}
+    .card:hover{border-color: rgba(95,91,255,.25); background: var(--card2)}
     .card h3{margin:10px 0 6px; font-size:16px}
     .card p{margin:0; color:var(--muted); font-size:14px}
     .icon{
       width:38px; height:38px;
       border-radius:14px;
-      border:1px solid rgba(15,23,42,.12);
-      background:#f2f5ff;
+      border:1px solid rgba(95,91,255,.15);
+      background:#eef0ff;
       display:grid; place-items:center;
     }
     .icon svg{opacity:.92}
@@ -293,12 +301,12 @@
     .callout{
       padding:18px;
       border-radius: var(--radius2);
-      border:1px solid rgba(47,191,155,.25);
+      border:1px solid rgba(95,91,255,.25);
       background:
-        radial-gradient(700px 380px at 20% 20%, rgba(47,191,155,.12), transparent 60%),
-        radial-gradient(700px 380px at 80% 60%, rgba(106,92,255,.10), transparent 60%),
+        radial-gradient(700px 380px at 20% 20%, rgba(95,91,255,.14), transparent 60%),
+        radial-gradient(700px 380px at 80% 60%, rgba(141,123,255,.12), transparent 60%),
         #ffffff;
-      box-shadow: 0 18px 60px rgba(15,23,42,.12);
+      box-shadow: 0 18px 60px rgba(95,91,255,.18);
     }
     .callout h3{margin:0 0 8px; font-size:18px}
     .callout ul{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px}
@@ -310,10 +318,10 @@
     details{
       border-radius: var(--radius);
       background: var(--card);
-      border:1px solid rgba(15,23,42,.08);
+      border:1px solid rgba(95,91,255,.12);
       padding:14px 14px;
     }
-    details[open]{background: var(--card2); border-color:rgba(15,23,42,.18)}
+    details[open]{background: var(--card2); border-color:rgba(95,91,255,.25)}
     summary{
       cursor:pointer;
       list-style:none;
@@ -340,15 +348,15 @@
       width:100%;
       padding:12px 12px;
       border-radius:14px;
-      border:1px solid rgba(15,23,42,.12);
+      border:1px solid rgba(95,91,255,.18);
       background: #ffffff;
       color:var(--text);
       outline:none;
       font-size:15px;
     }
     input:focus, textarea:focus{
-      border-color: rgba(47,191,155,.45);
-      box-shadow: 0 0 0 4px rgba(47,191,155,.12);
+      border-color: rgba(95,91,255,.45);
+      box-shadow: 0 0 0 4px rgba(95,91,255,.14);
     }
     textarea{min-height:110px; resize:vertical}
     .form-row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
@@ -357,8 +365,8 @@
       display:none;
       padding:12px 14px;
       border-radius:14px;
-      border:1px solid rgba(22,163,74,.25);
-      background: rgba(22,163,74,.10);
+      border:1px solid rgba(95,91,255,.25);
+      background: rgba(95,91,255,.10);
       color: rgba(15,23,42,.92);
       font-weight:700;
     }
@@ -366,7 +374,7 @@
     footer{
       padding:26px 0 44px;
       color:var(--muted2);
-      border-top:1px solid rgba(15,23,42,.08);
+      border-top:1px solid rgba(95,91,255,.12);
       margin-top:22px;
     }
     .footer-grid{
@@ -379,8 +387,8 @@
       display:inline-flex; align-items:center;
       padding:4px 8px;
       border-radius:10px;
-      background: #f2f5ff;
-      border:1px solid rgba(15,23,42,.10);
+      background: #eef0ff;
+      border:1px solid rgba(95,91,255,.15);
       font-weight:800;
       font-size:12px;
       color: rgba(15,23,42,.86);
@@ -452,19 +460,19 @@
 
             <ul class="bullets">
               <li><span class="check" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>Экономим время закупщика</li>
 
               <li><span class="check" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>Меньше ошибок и пересортов</li>
 
               <li><span class="check" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>Прозрачность и контроль</li>
 
               <li><span class="check" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>Простота внедрения</li>
             </ul>
 
@@ -505,31 +513,18 @@
                   <span>Сравнение и выбор лучших условий</span>
                 </div>
               </div>
-              <div class="table" role="table" aria-label="Таблица предложений">
-                <div class="row head" role="row">
-                  <div role="columnheader">Позиция</div>
-                  <div role="columnheader">Поставщик</div>
-                  <div role="columnheader">Цена</div>
+              <div class="insights" aria-label="Подсказки по закупке">
+                <div class="item">
+                  <strong>Лучшие условия найдены</strong>
+                  <span class="badge">-14% к цене</span>
                 </div>
-                <div class="row" role="row">
-                  <div role="cell">Куриное филе, 5 кг</div>
-                  <div role="cell">Поставщик A</div>
-                  <div role="cell" class="price">₽ 1 290</div>
+                <div class="item">
+                  <strong>Корзина собрана по правилам</strong>
+                  <span class="badge">без пересортов</span>
                 </div>
-                <div class="row" role="row">
-                  <div role="cell">Сыр, 1 кг</div>
-                  <div role="cell">Поставщик B</div>
-                  <div role="cell" class="price">₽ 690</div>
-                </div>
-                <div class="row" role="row">
-                  <div role="cell">Томаты, 10 кг</div>
-                  <div role="cell">Поставщик A</div>
-                  <div role="cell" class="price">₽ 980</div>
-                </div>
-                <div class="row" role="row">
-                  <div role="cell">Салфетки, 1 уп.</div>
-                  <div role="cell">Поставщик C</div>
-                  <div role="cell" class="price">₽ 240</div>
+                <div class="item">
+                  <strong>Готово к отправке</strong>
+                  <span class="badge">3 поставщика</span>
                 </div>
               </div>
             </div>
@@ -615,25 +610,25 @@
             <ul>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Сопоставление номенклатуры (в т.ч. по синонимам/названиям)
               </li>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Сравнение предложений и выбор оптимальных цен
               </li>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Корзины по поставщикам с учетом условий (кратность/мин. сумма)
               </li>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Подготовка и рассылка заявок поставщикам
               </li>
@@ -808,19 +803,19 @@
             <ul>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Пример номенклатуры (10–30 позиций)
               </li>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 1–2 прайса поставщиков (любого формата)
               </li>
               <li>
                 <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 Требования/условия (кратность, мин. сумма и т.п.)
               </li>
