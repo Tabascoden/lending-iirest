@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Ассистент закупщика для ресторана: за пару кликов формируем закупку, подтягиваем прайсы, находим лучшие предложения, собираем оптимальные корзины и рассылаем заявки поставщикам." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://iirest.ru/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="iirest — ассистент закупщика" />
+  <meta property="og:description" content="Закупка за пару кликов: прайсы, лучшие предложения, оптимальные корзины и рассылка заявок поставщикам." />
+  <meta property="og:url" content="https://iirest.ru/" />
+
+  <title>iirest — ассистент закупщика</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg2:#0f1733;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --muted2:rgba(234,240,255,.55);
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:24px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(110,231,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(167,139,250,.18), transparent 60%),
+        radial-gradient(1200px 700px at 60% 100%, rgba(52,211,153,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height:1.55;
+    }
+
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .dot{width:8px; height:8px; border-radius:99px; background:var(--good); box-shadow:0 0 0 4px rgba(52,211,153,.12)}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(11,16,32,.65);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; text-decoration:none;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(110,231,255,.85), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(167,139,250,.85), transparent 60%),
+        rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .brand small{display:block; font-weight:600; color:var(--muted2); letter-spacing:0}
+    .menu{display:flex; gap:18px; align-items:center}
+    .menu a{
+      text-decoration:none; color:var(--muted);
+      font-weight:600; font-size:14px;
+      padding:8px 10px; border-radius:10px;
+    }
+    .menu a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      text-decoration:none;
+      font-weight:800;
+      letter-spacing:.2px;
+      cursor:pointer;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+    }
+    .btn:hover{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(110,231,255,.20), rgba(167,139,250,.18));
+      border-color: rgba(110,231,255,.35);
+      box-shadow: 0 18px 55px rgba(110,231,255,.10);
+    }
+    .btn.primary:hover{border-color: rgba(110,231,255,.50)}
+    .btn.ghost{background:transparent}
+    .btn.small{padding:10px 12px; font-weight:800; border-radius:12px; font-size:14px}
+
+    .hero{
+      padding:56px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:26px;
+      align-items:start;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(34px, 4.2vw, 52px);
+      line-height:1.05;
+      letter-spacing:-.8px;
+    }
+    .lead{font-size:18px; color:var(--muted); max-width:52ch; margin:0}
+    .bullets{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px 14px;
+      margin:18px 0 22px;
+      padding:0;
+      list-style:none;
+    }
+    .bullets li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:14px;
+      color:var(--muted);
+      font-weight:650;
+      font-size:14px;
+    }
+    .check{
+      width:18px; height:18px; flex:0 0 auto;
+      border-radius:6px;
+      background:rgba(52,211,153,.18);
+      border:1px solid rgba(52,211,153,.35);
+      display:grid; place-items:center;
+      margin-top:2px;
+    }
+    .cta{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin:12px 0 14px;
+    }
+    .note{
+      color:var(--muted2);
+      font-size:13px;
+      margin-top:10px;
+      max-width:62ch;
+    }
+
+    .mock{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(600px 380px at 30% 20%, rgba(110,231,255,.15), transparent 60%),
+        radial-gradient(600px 380px at 80% 60%, rgba(167,139,250,.12), transparent 60%),
+        rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .mock .top{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .mock .dots{display:flex; gap:6px}
+    .mock .dots span{width:10px; height:10px; border-radius:99px; background:rgba(255,255,255,.14)}
+    .mock .body{padding:16px}
+    .kpi{
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .kpi .card{
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .kpi .card b{display:block; font-size:16px}
+    .kpi .card span{color:var(--muted); font-size:13px}
+    .table{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      background:rgba(0,0,0,.10);
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1.4fr .7fr .7fr;
+      gap:10px;
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .row.head{
+      border-top:none;
+      color:rgba(234,240,255,.86);
+      background:rgba(255,255,255,.06);
+      font-weight:800;
+    }
+    .price{color:rgba(110,231,255,.95); font-weight:800}
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      font-weight:800;
+      color:rgba(234,240,255,.86);
+      font-size:12px;
+    }
+
+    section{padding:28px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+      margin-bottom:14px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: clamp(22px, 2.6vw, 32px);
+      letter-spacing:-.3px;
+      line-height:1.15;
+    }
+    .section-title p{margin:0; color:var(--muted); max-width:70ch}
+
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .grid-4{display:grid; grid-template-columns: repeat(4, 1fr); gap:14px}
+    .card{
+      padding:16px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .card:hover{border-color: rgba(255,255,255,.18); background: var(--card2)}
+    .card h3{margin:10px 0 6px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .icon{
+      width:38px; height:38px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      display:grid; place-items:center;
+    }
+    .icon svg{opacity:.92}
+
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+    }
+    .callout{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(110,231,255,.18);
+      background:
+        radial-gradient(700px 380px at 20% 20%, rgba(110,231,255,.12), transparent 60%),
+        radial-gradient(700px 380px at 80% 60%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.04);
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+    }
+    .callout h3{margin:0 0 8px; font-size:18px}
+    .callout ul{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px}
+    .callout li{display:flex; gap:10px; color:var(--muted); font-size:14px}
+
+    .faq{
+      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
+    }
+    details{
+      border-radius: var(--radius);
+      background: var(--card);
+      border:1px solid rgba(255,255,255,.10);
+      padding:14px 14px;
+    }
+    details[open]{background: var(--card2); border-color:rgba(255,255,255,.18)}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:850;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{transition: transform .18s ease}
+    details[open] .chev{transform: rotate(180deg)}
+    details p{margin:10px 0 0; color:var(--muted); font-size:14px}
+
+    .form-wrap{
+      display:grid;
+      grid-template-columns: 1fr .95fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    form{
+      display:grid; gap:10px;
+    }
+    label{font-size:13px; color:var(--muted)}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(110,231,255,.45);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.10);
+    }
+    textarea{min-height:110px; resize:vertical}
+    .form-row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .fineprint{color:var(--muted2); font-size:12px; margin:0}
+    .success{
+      display:none;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(52,211,153,.25);
+      background: rgba(52,211,153,.10);
+      color: rgba(234,240,255,.92);
+      font-weight:700;
+    }
+
+    footer{
+      padding:26px 0 44px;
+      color:var(--muted2);
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:22px;
+    }
+    .footer-grid{
+      display:flex; justify-content:space-between; gap:14px; align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .footer-grid a{color:var(--muted); text-decoration:none}
+    .footer-grid a:hover{color:var(--text)}
+    .kbd{
+      display:inline-flex; align-items:center;
+      padding:4px 8px;
+      border-radius:10px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:800;
+      font-size:12px;
+      color: rgba(234,240,255,.86);
+    }
+
+    /* mobile */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr; }
+      .mock{order:2}
+      .bullets{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:1fr 1fr}
+      .grid-3{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
+      .form-wrap{grid-template-columns:1fr}
+      .menu{display:none}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"iirest — ассистент закупщика",
+    "applicationCategory":"BusinessApplication",
+    "operatingSystem":"Web",
+    "description":"Сервис ассистента закупщика: формирует заявки на закупку, подтягивает прайсы, находит лучшие предложения, собирает оптимальные корзины с учетом требований поставщиков и рассылает заявки.",
+    "url":"https://iirest.ru/"
+  }
+  </script>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="iirest">
+          <span class="logo" aria-hidden="true"></span>
+          <span>
+            iirest
+            <small>Ассистент закупщика</small>
+          </span>
+        </a>
+
+        <nav class="menu" aria-label="Навигация">
+          <a href="#how">Как работает</a>
+          <a href="#features">Возможности</a>
+          <a href="#benefits">Преимущества</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Контакты</a>
+        </nav>
+
+        <a class="btn primary small" href="#contact">Получить демо</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <span class="pill"><span class="dot"></span> Можно начать прямо сейчас — без сложной настройки</span>
+            <h1>Ассистент закупщика для ресторана</h1>
+            <p class="lead">
+              Делайте закупку за пару кликов: мы подтягиваем прайсы, находим лучшие предложения под вашу номенклатуру,
+              формируем оптимальные корзины с учетом требований поставщиков и рассылаем заявки.
+            </p>
+
+            <ul class="bullets">
+              <li><span class="check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Экономим время закупщика</li>
+
+              <li><span class="check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Меньше ошибок и пересортов</li>
+
+              <li><span class="check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Прозрачность и контроль</li>
+
+              <li><span class="check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Простота внедрения</li>
+            </ul>
+
+            <div class="cta">
+              <a class="btn primary" href="#contact">
+                Получить демо
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 17L17 7" stroke="rgba(234,240,255,.95)" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M9 7h8v8" stroke="rgba(234,240,255,.95)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a class="btn ghost" href="#how">Как это работает</a>
+              <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШ TELEGRAM -->
+              <a class="btn ghost" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
+                Написать в Telegram
+              </a>
+            </div>
+
+            <p class="note">
+              Базовый сервис — формирование заявки на закупку.
+              Дополнительно: мониторинг критических уровней запасов, оптимизация складских запасов, поиск поставщиков.
+            </p>
+          </div>
+
+          <aside class="mock" aria-label="Пример интерфейса">
+            <div class="top">
+              <span class="tag">Пример: “Оптимальная закупка”</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="body">
+              <div class="kpi">
+                <div class="card">
+                  <b>Заявка за 2–3 клика</b>
+                  <span>Номенклатура → предложения → корзины</span>
+                </div>
+                <div class="card">
+                  <b>Прайсы подтянуты</b>
+                  <span>Сравнение и выбор лучших условий</span>
+                </div>
+              </div>
+              <div class="table" role="table" aria-label="Таблица предложений">
+                <div class="row head" role="row">
+                  <div role="columnheader">Позиция</div>
+                  <div role="columnheader">Поставщик</div>
+                  <div role="columnheader">Цена</div>
+                </div>
+                <div class="row" role="row">
+                  <div role="cell">Куриное филе, 5 кг</div>
+                  <div role="cell">Поставщик A</div>
+                  <div role="cell" class="price">₽ 1 290</div>
+                </div>
+                <div class="row" role="row">
+                  <div role="cell">Сыр, 1 кг</div>
+                  <div role="cell">Поставщик B</div>
+                  <div role="cell" class="price">₽ 690</div>
+                </div>
+                <div class="row" role="row">
+                  <div role="cell">Томаты, 10 кг</div>
+                  <div role="cell">Поставщик A</div>
+                  <div role="cell" class="price">₽ 980</div>
+                </div>
+                <div class="row" role="row">
+                  <div role="cell">Салфетки, 1 уп.</div>
+                  <div role="cell">Поставщик C</div>
+                  <div role="cell" class="price">₽ 240</div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </header>
+
+    <section id="how">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Как работает</h2>
+            <p>Собирайте закупку быстро и прозрачно: от номенклатуры до отправленных заявок поставщикам.</p>
+          </div>
+          <a class="btn small" href="#contact">Показать демо</a>
+        </div>
+
+        <div class="grid-4">
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M8 7h8M8 12h8M8 17h5" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="rgba(234,240,255,.55)" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>1) Выбираете номенклатуру</h3>
+            <p>Пара кликов — и формируете список позиций, которые нужно закупить.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M4 7h16M4 12h16M4 17h10" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 6v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6" stroke="rgba(234,240,255,.55)" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>2) Подтягиваем прайсы</h3>
+            <p>Находим совпадения и сравниваем предложения по вашей номенклатуре.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v18M3 12h18" stroke="rgba(234,240,255,.55)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 7h10v10H7V7Z" stroke="rgba(234,240,255,.9)" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>3) Собираем корзины</h3>
+            <p>Оптимальные корзины с учетом требований поставщиков: фасовка, кратность, минимальная сумма.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2 11 13" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="rgba(234,240,255,.55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>4) Рассылаем заявки</h3>
+            <p>Отправляем поставщикам сформированные заявки и фиксируем результат.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Возможности</h2>
+            <p>Начните с базового сценария, а затем подключайте модули для контроля запасов и снижения себестоимости.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="callout">
+            <h3>Базовый сервис: формирование заявки на закупку</h3>
+            <p style="margin:0; color:var(--muted)">
+              Вы делаете пару кликов — система подтягивает прайсы, находит лучшие предложения,
+              формирует оптимальные корзины и готовит заявки поставщикам.
+            </p>
+            <ul>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Сопоставление номенклатуры (в т.ч. по синонимам/названиям)
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Сравнение предложений и выбор оптимальных цен
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Корзины по поставщикам с учетом условий (кратность/мин. сумма)
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Подготовка и рассылка заявок поставщикам
+              </li>
+            </ul>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 22s7-4.35 7-10V7l-7-4-7 4v5c0 5.65 7 10 7 10Z" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Мониторинг критических запасов</h3>
+              <p>Чтобы ничего не уходило в стоп: уведомления и контроль критических уровней.</p>
+            </div>
+
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 19V5M4 19h16M8 16V9M12 19v-6M16 19v-10" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Оптимизация складских запасов</h3>
+              <p>Снижаем “оборотку”: рекомендации по оптимальным уровням и излишкам.</p>
+            </div>
+
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="rgba(234,240,255,.55)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Поиск поставщиков</h3>
+              <p>Снижаем себестоимость: альтернативы и лучшие условия под вашу номенклатуру.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn primary" href="#contact">Запросить демо</a>
+          <a class="btn ghost" href="#benefits">Смотреть преимущества</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Преимущества</h2>
+            <p>Не просто “прайс-агрегатор”, а рабочее место закупщика: быстрее, точнее, прозрачно.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Экономим время</h3>
+            <p>Меньше рутины: сравнение прайсов, сбор корзин и подготовка заявок автоматизированы.</p>
+          </div>
+          <div class="card">
+            <h3>Меньше ошибок</h3>
+            <p>Снижаем риски: фасовки, кратности, условия поставщиков учитываются при сборке корзин.</p>
+          </div>
+          <div class="card">
+            <h3>Удобство</h3>
+            <p>Единый процесс “от потребности до заявки”. Без хаоса в чатах и табличках.</p>
+          </div>
+          <div class="card">
+            <h3>Прозрачность и контроль</h3>
+            <p>Понятно, почему выбрано именно так: предложения, условия и история решений.</p>
+          </div>
+          <div class="card">
+            <h3>Простота внедрения</h3>
+            <p>Можно начать использовать сразу — без сложной настройки или долгой интеграции.</p>
+          </div>
+          <div class="card">
+            <h3>Без ожидания регистрации поставщиков</h3>
+            <p>Работает уже сейчас: вы добавляете прайсы/номенклатуру и запускаете закупку.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>FAQ</h2>
+            <p>Короткие ответы на частые вопросы. Если нужен разбор под ваш кейс — покажем демо.</p>
+          </div>
+          <a class="btn small" href="#contact">Получить консультацию</a>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>
+              Сколько времени занимает старт?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>Можно начать в тот же день: базовый сценарий не требует сложной настройки — покажем процесс и поможем подготовить стартовый набор данных.</p>
+          </details>
+
+          <details>
+            <summary>
+              Нужна ли регистрация поставщиков?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>Нет. Вы можете начать сразу: система работает с вашими прайсами и условиями, а заявки формируются и отправляются по выбранному каналу.</p>
+          </details>
+
+          <details>
+            <summary>
+              Как вы подтягиваете прайсы?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>Прайсы импортируются и нормализуются, затем система сопоставляет позиции с вашей номенклатурой, чтобы корректно сравнивать предложения.</p>
+          </details>
+
+          <details>
+            <summary>
+              Как формируются корзины?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>С учетом требований поставщиков: минимальные суммы, фасовки, кратности, доступность. Цель — оптимально закрыть вашу потребность.</p>
+          </details>
+
+          <details>
+            <summary>
+              Как отправляются заявки поставщикам?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>По согласованному каналу: email, мессенджеры или файл. На демо покажем удобный вариант под ваш процесс.</p>
+          </details>
+
+          <details>
+            <summary>
+              Можно ли подключить контроль запасов?
+              <span class="chev" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <p>Да. Дополнительные модули закрывают: критические уровни, оптимизацию запасов и поиск поставщиков для снижения себестоимости.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Получить демо и обсудить ваш кейс</h2>
+            <p>Оставьте контакт — покажем, как ваш закупщик сможет собирать заявки быстрее и с меньшим количеством ошибок.</p>
+          </div>
+        </div>
+
+        <div class="form-wrap">
+          <div class="callout" style="padding:18px;">
+            <h3 style="margin:0 0 10px;">Что подготовить к демо (по желанию)</h3>
+            <ul>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Пример номенклатуры (10–30 позиций)
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                1–2 прайса поставщиков (любого формата)
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(52,211,153,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Требования/условия (кратность, мин. сумма и т.п.)
+              </li>
+            </ul>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
+              <a class="btn ghost small" href="mailto:hello@iirest.ru">Написать на email</a>
+              <a class="btn ghost small" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
+            </div>
+
+            <p class="note" style="margin-top:12px;">
+              <span class="kbd">Подсказка</span>
+              сейчас форма на сайте работает без сервера (покажет “заявка принята” и подготовит текст). Позже можно подключить реальную отправку в Telegram/CRM.
+            </p>
+          </div>
+
+          <div class="card" style="padding:18px;">
+            <div class="success" id="successBox">Спасибо! Заявка принята. Мы свяжемся с вами.</div>
+
+            <form id="leadForm" novalidate>
+              <div class="form-row">
+                <div>
+                  <label for="name">Имя</label>
+                  <input id="name" name="name" autocomplete="name" placeholder="Например: Денис" />
+                </div>
+                <div>
+                  <label for="contactField">Телефон или Telegram <span style="color:var(--warn)">*</span></label>
+                  <input id="contactField" name="contact" autocomplete="tel" placeholder="+7… или @username" required />
+                </div>
+              </div>
+
+              <div>
+                <label for="place">Заведение / компания (опционально)</label>
+                <input id="place" name="place" placeholder="Например: кафе, ресторан, сеть" />
+              </div>
+
+              <div>
+                <label for="comment">Комментарий (опционально)</label>
+                <textarea id="comment" name="comment" placeholder="Например: нужны 6 поставщиков, хотим контроль стопов и оптимизацию запасов"></textarea>
+              </div>
+
+              <button class="btn primary" type="submit">Запросить демо</button>
+              <p class="fineprint">
+                Нажимая кнопку, вы соглашаетесь на обработку контактных данных для связи по заявке.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; font-weight:900; color:rgba(234,240,255,.92)">
+              <span class="logo" aria-hidden="true" style="width:28px;height:28px;border-radius:10px"></span>
+              iirest
+            </div>
+            <div style="margin-top:8px;">© <span id="year"></span> iirest. Все права защищены.</div>
+          </div>
+
+          <div style="display:grid; gap:8px;">
+            <a href="#how">Как работает</a>
+            <a href="#features">Возможности</a>
+            <a href="#faq">FAQ</a>
+          </div>
+
+          <div style="display:grid; gap:8px;">
+            <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
+            <a href="mailto:hello@iirest.ru">hello@iirest.ru</a>
+            <a href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple "static" form handler:
+    // 1) validates required contact
+    // 2) shows success message
+    // 3) prepares a message and copies it to clipboard (best-effort)
+    (function(){
+      const form = document.getElementById('leadForm');
+      const success = document.getElementById('successBox');
+
+      function escapeText(s){
+        return (s || '').toString().replace(/\s+/g,' ').trim();
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = escapeText(document.getElementById('name').value);
+        const contact = escapeText(document.getElementById('contactField').value);
+        const place = escapeText(document.getElementById('place').value);
+        const comment = escapeText(document.getElementById('comment').value);
+
+        if (!contact) {
+          document.getElementById('contactField').focus();
+          form.style.animation = 'shake .16s ease-in-out 0s 2';
+          setTimeout(() => form.style.animation = '', 400);
+          return;
+        }
+
+        const text =
+`Заявка на демо iirest
+Имя: ${name || '-'}
+Контакт: ${contact}
+Заведение: ${place || '-'}
+Комментарий: ${comment || '-'}`;
+
+        // Show success
+        success.style.display = 'block';
+        success.scrollIntoView({behavior:'smooth', block:'center'});
+
+        // Best-effort copy
+        try {
+          await navigator.clipboard.writeText(text);
+          success.textContent = 'Спасибо! Заявка принята. Текст заявки скопирован в буфер — можно вставить в Telegram/почту.';
+        } catch (err) {
+          success.textContent = 'Спасибо! Заявка принята. (Если нужно, скопируйте данные вручную — мы скоро свяжемся.)';
+          console.log(err);
+        }
+
+        // Optional: open mail client (uncomment if you want)
+        // window.location.href = 'mailto:hello@iirest.ru?subject=' + encodeURIComponent('Демо iirest') + '&body=' + encodeURIComponent(text);
+
+        form.reset();
+      });
+    })();
+  </script>
+
+  <style>
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</body>
+</html>
