@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ title }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m, e, t, r, i, k, a) {
+      m[i] = m[i] || function() {
+        (m[i].a = m[i].a || []).push(arguments);
+      };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) {
+        if (document.scripts[j].src === r) {
+          return;
+        }
+      }
+      k = e.createElement(t),
+        a = e.getElementsByTagName(t)[0],
+        k.async = 1,
+        k.src = r,
+        a.parentNode.insertBefore(k, a);
+    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(105886469, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true,
+      trackHash: true,
+      ecommerce: "dataLayer"
+    });
+  </script>
+  <!-- /Yandex.Metrika counter -->
+  <style>
+    :root {
+      --bg: #f5f7ff;
+      --surface: #ffffff;
+      --text: #1e1b4b;
+      --text-muted: #6366f1;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #ec4899;
+      --border: #e0e7ff;
+      --input-bg: #ffffff;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+      --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    }
+
+    /* Глобальный класс для скрытия элементов */
+    .hidden { display: none !important; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
+    }
+
+    a { color: inherit; text-decoration: none; transition: all 0.2s; }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .headerInner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand b {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo-img {
+      width: 34px;
+      height: 34px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+    }
+    .nav a {
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      color: #4338ca;
+    }
+    .nav a:hover {
+      color: var(--primary);
+      background: #eef2ff;
+    }
+    .nav a.active {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+    h2 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+    .sub { color: #64748b; font-size: 14px; margin-top: 6px; }
+
+    /* Forms */
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .input, .select {
+      height: 44px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 16px;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .input:focus, .select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    #q { flex: 2 1 300px; }
+    .select { flex: 1 1 150px; }
+
+    .btn {
+      height: 44px;
+      padding: 0 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #f8fafc; transform: translateY(-1px); }
+    .btn.primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+    .btn.primary:hover { 
+      background: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    .btn.danger {
+      color: #ef4444;
+      border-color: #fee2e2;
+    }
+    .btn.danger:hover { background: #fef2f2; }
+
+    /* Tables */
+    .tableWrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th {
+      background: #fcfcff;
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4338ca;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f5f7ff; }
+
+    /* Badges */
+    .badge {
+      padding: 4px 10px;
+      background: #eef2ff;
+      color: #4338ca;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .accent { color: var(--primary); font-weight: 700; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: #1e1b4b;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%) scale(0.9); opacity: 0; }
+      to { transform: translateX(0) scale(1); opacity: 1; }
+    }
+
+    /* Mobile layout */
+    @media (max-width: 960px) {
+      .headerInner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 16px;
+        height: auto;
+      }
+      .nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .nav a {
+        white-space: nowrap;
+        background: #f5f7ff;
+        border: 1px solid var(--border);
+      }
+      .container {
+        margin: 20px auto;
+        padding: 0 16px;
+      }
+      .card {
+        padding: 20px;
+      }
+      .cardHeader {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .controls {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .controls .input,
+      .controls .select,
+      .controls .btn {
+        width: 100%;
+      }
+      .tableWrap {
+        border-radius: 14px;
+      }
+      table thead { display: none; }
+      table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        border-bottom: 12px solid var(--bg);
+        padding: 12px 16px;
+      }
+      table tbody tr:hover td { background: transparent; }
+      table tbody td {
+        border: none;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 14px;
+      }
+      table tbody td::before {
+        content: attr(data-label);
+        color: #64748b;
+        font-weight: 600;
+      }
+    }
+  </style>
+</head>
+<body>
+  <noscript><div><img src="https://mc.yandex.ru/watch/105886469" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
+  <header class="header">
+    <div class="headerInner">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='logo.svg') }}" class="logo-img" alt="iirest">
+        <b>iirest</b>
+      </div>
+      <nav class="nav">
+        <a href="/" class="{{ 'active' if active=='search' else '' }}">Поиск</a>
+        <a href="/cart" class="{{ 'active' if active=='cart' else '' }}">Заявка <span id="cartBadge" class="badge">0</span></a>
+        <a href="/lists" class="{{ 'active' if active=='lists' else '' }}">Прайсы</a>
+        <a href="/tenders" class="{{ 'active' if active=='tenders' else '' }}">Тендеры</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="toast" class="toast hidden">
+    <div id="toastContent">
+      <div id="toastTitle" style="font-weight:700; font-size:15px"></div>
+      <div id="toastSubtitle" style="font-size:13px; opacity:0.8; margin-top:2px"></div>
+    </div>
+  </div>
+
+  <script>
+    function $(id){ return document.getElementById(id); }
+    function esc(s){
+      return String(s ?? "").replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+    }
+    function fmtPrice(p){
+      const n = Number(p);
+      if (Number.isNaN(n)) return p ?? "";
+      const rounded = Math.round(n);
+      return rounded.toLocaleString("ru-RU", {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    }
+
+    function loadCart(){
+      try { return JSON.parse(localStorage.getItem("cart_v1") || "{}"); } catch(e){ return {}; }
+    }
+    function saveCart(c){
+      localStorage.setItem("cart_v1", JSON.stringify(c));
+      updateCartBadge();
+    }
+    function updateCartBadge(){
+      const cart = loadCart();
+      const count = Object.keys(cart).length;
+      if($("cartBadge")) $("cartBadge").textContent = count;
+    }
+    updateCartBadge();
+
+    let toastTimer = null;
+    function toast(title, subtitle){
+      const t = $("toast");
+      if(!t) return;
+      $("toastTitle").textContent = title;
+      $("toastSubtitle").textContent = subtitle;
+      t.classList.remove("hidden");
+      if(toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.add("hidden"), 3000);
+    }
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
