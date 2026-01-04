@@ -6,7 +6,7 @@
   <meta name="description" content="Ассистент закупщика для ресторана: за пару кликов формируем закупку, подтягиваем прайсы, находим лучшие предложения, собираем оптимальные корзины и рассылаем заявки поставщикам." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://iirest.ru/" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23635fff'/%3E%3Cstop offset='1' stop-color='%239d8bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23f2efff'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="iirest — ассистент закупщика" />
@@ -19,11 +19,11 @@
     @import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
 
     :root{
-      --bg:#f3f4ff;
-      --bg2:#ffffff;
+      --bg:#f6f8fc;
+      --bg2:#eef1f6;
       --card:#ffffff;
-      --card2:#f0f2ff;
-      --stroke:#d9ddf5;
+      --card2:#f4f6fb;
+      --stroke:#e1e6f2;
       --text:#1a1f36;
       --muted:#5c607a;
       --muted2:#7a7f9c;
@@ -31,7 +31,7 @@
       --accent2:#8d7bff;
       --good:#6f6bff;
       --warn:#f59e0b;
-      --shadow: 0 22px 60px rgba(40,45,90,.15);
+      --shadow: 0 24px 60px rgba(15,23,42,.16);
       --radius:20px;
       --radius2:26px;
       --max: 1120px;
@@ -44,17 +44,9 @@
       font-family: "Onest", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 600px at 15% 10%, rgba(95,91,255,.18), transparent 60%),
-        radial-gradient(900px 600px at 85% 0%, rgba(141,123,255,.16), transparent 60%),
-        radial-gradient(1200px 700px at 60% 100%, rgba(170,176,220,.22), transparent 60%),
+        radial-gradient(1000px 640px at 12% 0%, rgba(95,91,255,.08), transparent 60%),
+        radial-gradient(900px 540px at 88% 8%, rgba(141,123,255,.08), transparent 60%),
         linear-gradient(180deg, var(--bg), var(--bg2));
-      background-image:
-        url("data:image/svg+xml,%3Csvg width='220' height='220' viewBox='0 0 220 220' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='220' height='220' fill='white'/%3E%3Cpath d='M0 110h220M110 0v220' stroke='%23e2e8f0' stroke-width='1'/%3E%3Ccircle cx='110' cy='110' r='60' stroke='%23e2e8f0' stroke-width='1'/%3E%3C/svg%3E"),
-        radial-gradient(900px 600px at 15% 10%, rgba(95,91,255,.18), transparent 60%),
-        radial-gradient(900px 600px at 85% 0%, rgba(141,123,255,.16), transparent 60%),
-        radial-gradient(1200px 700px at 60% 100%, rgba(170,176,220,.22), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      background-repeat: repeat;
       line-height:1.55;
     }
 
@@ -74,8 +66,8 @@
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(14px);
-      background:rgba(249,249,255,.9);
-      border-bottom:1px solid rgba(95,91,255,.14);
+      background:rgba(246,248,252,.92);
+      border-bottom:1px solid rgba(120,130,180,.14);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
@@ -87,12 +79,19 @@
     }
     .logo{
       width:34px; height:34px; border-radius:12px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(95,91,255,.9), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(141,123,255,.9), transparent 60%),
-        rgba(255,255,255,.9);
-      border:1px solid rgba(95,91,255,.2);
-      box-shadow: 0 14px 30px rgba(95,91,255,.24);
+      overflow:hidden;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(120,130,180,.2);
+      background:#ffffff;
+      box-shadow: 0 12px 26px rgba(95,91,255,.18);
+    }
+    .logo img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:contain;
     }
     .brand small{display:block; font-weight:600; color:var(--muted2); letter-spacing:0}
     .menu{display:flex; gap:18px; align-items:center}
@@ -120,7 +119,7 @@
     .btn:hover{background:#f4f6ff; border-color:rgba(15,23,42,.18)}
     .btn:active{transform: translateY(1px)}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(95,91,255,.2), rgba(141,123,255,.25));
+      background: linear-gradient(135deg, rgba(95,91,255,.16), rgba(141,123,255,.2));
       border-color: rgba(95,91,255,.4);
       box-shadow: 0 18px 45px rgba(95,91,255,.22);
     }
@@ -183,15 +182,15 @@
 
     .mock{
       border-radius: var(--radius2);
-      border:1px solid rgba(95,91,255,.18);
+      border:1px solid rgba(120,130,180,.2);
       background:
-        linear-gradient(135deg, rgba(95,91,255,.12), transparent 55%),
-        linear-gradient(320deg, rgba(141,123,255,.12), transparent 55%),
+        linear-gradient(135deg, rgba(95,91,255,.08), transparent 55%),
+        linear-gradient(320deg, rgba(141,123,255,.08), transparent 55%),
         #ffffff;
       background-image:
-        url("data:image/svg+xml,%3Csvg width='240' height='160' viewBox='0 0 240 160' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='240' height='160' rx='20' fill='%23ffffff'/%3E%3Cpath d='M24 120c20-32 52-48 86-44 24 2 32 14 56 14 22 0 36-10 50-24' stroke='%23cbd5f5' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='38' cy='38' r='18' fill='%23e9e5ff'/%3E%3Ccircle cx='208' cy='42' r='16' fill='%23e7e5ff'/%3E%3C/svg%3E"),
-        linear-gradient(135deg, rgba(95,91,255,.12), transparent 55%),
-        linear-gradient(320deg, rgba(141,123,255,.12), transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='240' height='160' viewBox='0 0 240 160' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='240' height='160' rx='20' fill='%23ffffff'/%3E%3Cpath d='M24 120c20-32 52-48 86-44 24 2 32 14 56 14 22 0 36-10 50-24' stroke='%23d6dced' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='38' cy='38' r='18' fill='%23eef1fb'/%3E%3Ccircle cx='208' cy='42' r='16' fill='%23eef1fb'/%3E%3C/svg%3E"),
+        linear-gradient(135deg, rgba(95,91,255,.08), transparent 55%),
+        linear-gradient(320deg, rgba(141,123,255,.08), transparent 55%),
         #ffffff;
       background-repeat: no-repeat;
       background-position: right 12px top 16px;
@@ -280,8 +279,8 @@
       padding:16px;
       border-radius: var(--radius);
       background: var(--card);
-      border:1px solid rgba(95,91,255,.12);
-      box-shadow: 0 12px 28px rgba(95,91,255,.08);
+      border:1px solid rgba(120,130,180,.16);
+      box-shadow: 0 16px 34px rgba(15,23,42,.08);
     }
     .card:hover{border-color: rgba(95,91,255,.25); background: var(--card2)}
     .card h3{margin:10px 0 6px; font-size:16px}
@@ -301,12 +300,12 @@
     .callout{
       padding:18px;
       border-radius: var(--radius2);
-      border:1px solid rgba(95,91,255,.25);
+      border:1px solid rgba(120,130,180,.22);
       background:
-        radial-gradient(700px 380px at 20% 20%, rgba(95,91,255,.14), transparent 60%),
-        radial-gradient(700px 380px at 80% 60%, rgba(141,123,255,.12), transparent 60%),
+        radial-gradient(700px 380px at 20% 20%, rgba(95,91,255,.1), transparent 60%),
+        radial-gradient(700px 380px at 80% 60%, rgba(141,123,255,.1), transparent 60%),
         #ffffff;
-      box-shadow: 0 18px 60px rgba(95,91,255,.18);
+      box-shadow: 0 18px 54px rgba(15,23,42,.12);
     }
     .callout h3{margin:0 0 8px; font-size:18px}
     .callout ul{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px}
@@ -426,7 +425,9 @@
     <div class="container">
       <div class="nav">
         <a class="brand" href="#top" aria-label="iirest">
-          <span class="logo" aria-hidden="true"></span>
+          <span class="logo" aria-hidden="true">
+            <img src="logo.svg" alt="" />
+          </span>
           <span>
             iirest
             <small>Ассистент закупщика</small>
@@ -873,7 +874,9 @@
         <div class="footer-grid">
           <div>
             <div style="display:flex; align-items:center; gap:10px; font-weight:900; color:rgba(234,240,255,.92)">
-              <span class="logo" aria-hidden="true" style="width:28px;height:28px;border-radius:10px"></span>
+              <span class="logo" aria-hidden="true" style="width:28px;height:28px;border-radius:10px">
+                <img src="logo.svg" alt="" />
+              </span>
               iirest
             </div>
             <div style="margin-top:8px;">© <span id="year"></span> iirest. Все права защищены.</div>
