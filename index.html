@@ -851,9 +851,8 @@
             </ul>
 
             <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-              <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
-              <a class="btn ghost small" href="mailto:hello@iirest.ru">Написать на email</a>
-              <a class="btn ghost small" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
+              <a class="btn ghost small" href="mailto:dkruglov@outlook.com">Написать на email</a>
+              <a class="btn ghost small" href="https://t.me/tabascoden" target="_blank" rel="noopener noreferrer">Telegram</a>
             </div>
 
             <p class="note" style="margin-top:12px;">
@@ -917,9 +916,8 @@
           </div>
 
           <div style="display:grid; gap:8px;">
-            <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
-            <a href="mailto:hello@iirest.ru">hello@iirest.ru</a>
-            <a href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a href="mailto:dkruglov@outlook.com">dkruglov@outlook.com</a>
+            <a href="https://t.me/tabascoden" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </div>
       </div>
@@ -963,22 +961,33 @@
 Контакт: ${contact}
 Заведение: ${place || '-'}
 Комментарий: ${comment || '-'}`;
+        const subject = 'Демо iirest';
+        const mailtoLink = `mailto:dkruglov@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+        const telegramLink = `https://t.me/share/url?url=&text=${encodeURIComponent(text)}`;
 
         // Show success
         success.style.display = 'block';
         success.scrollIntoView({behavior:'smooth', block:'center'});
+        success.innerHTML = `Спасибо! Заявка принята.<br />
+          <span class="note" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;">
+            Мы уже получили данные. Для быстрой отправки можно открыть:
+          </span>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn small" href="${mailtoLink}">Email</a>
+            <a class="btn small" href="${telegramLink}" target="_blank" rel="noopener noreferrer">Telegram</a>
+          </div>`;
 
         // Best-effort copy
         try {
           await navigator.clipboard.writeText(text);
-          success.textContent = 'Спасибо! Заявка принята. Текст заявки скопирован в буфер — можно вставить в Telegram/почту.';
+          success.insertAdjacentHTML('beforeend', '<div class="note" style="margin-top:10px;">Текст заявки скопирован в буфер — можно вставить в Telegram/почту.</div>');
         } catch (err) {
-          success.textContent = 'Спасибо! Заявка принята. (Если нужно, скопируйте данные вручную — мы скоро свяжемся.)';
+          success.insertAdjacentHTML('beforeend', '<div class="note" style="margin-top:10px;">Если нужно, скопируйте данные вручную — мы скоро свяжемся.</div>');
           console.log(err);
         }
 
         // Optional: open mail client (uncomment if you want)
-        // window.location.href = 'mailto:hello@iirest.ru?subject=' + encodeURIComponent('Демо iirest') + '&body=' + encodeURIComponent(text);
+        // window.location.href = mailtoLink;
 
         form.reset();
       });
