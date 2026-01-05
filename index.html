@@ -515,7 +515,7 @@
               </a>
               <a class="btn ghost" href="#how">Как это работает</a>
               <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШ TELEGRAM -->
-              <a class="btn ghost" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
+              <a class="btn ghost" href="https://t.me/tabascoden" target="_blank" rel="noopener noreferrer">
                 Написать в Telegram
               </a>
             </div>
@@ -825,78 +825,7 @@
             <p>Оставьте контакт — покажем, как ваш закупщик сможет собирать заявки быстрее и с меньшим количеством ошибок.</p>
           </div>
         </div>
-
-        <div class="form-wrap">
-          <div class="callout" style="padding:18px;">
-            <h3 style="margin:0 0 10px;">Что подготовить к демо (по желанию)</h3>
-            <ul>
-              <li>
-                <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                Пример номенклатуры (10–30 позиций)
-              </li>
-              <li>
-                <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                1–2 прайса поставщиков (любого формата)
-              </li>
-              <li>
-                <span class="check" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(95,91,255,.95)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                Требования/условия (кратность, мин. сумма и т.п.)
-              </li>
-            </ul>
-
-            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-              <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
-              <a class="btn ghost small" href="mailto:hello@iirest.ru">Написать на email</a>
-              <a class="btn ghost small" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
-            </div>
-
-            <p class="note" style="margin-top:12px;">
-              <span class="kbd">Подсказка</span>
-              сейчас форма на сайте работает без сервера (покажет “заявка принята” и подготовит текст). Позже можно подключить реальную отправку в Telegram/CRM.
-            </p>
-          </div>
-
-          <div class="card" style="padding:18px;">
-            <div class="success" id="successBox">Спасибо! Заявка принята. Мы свяжемся с вами.</div>
-
-            <form id="leadForm" novalidate>
-              <div class="form-row">
-                <div>
-                  <label for="name">Имя</label>
-                  <input id="name" name="name" autocomplete="name" placeholder="Например: Денис" />
-                </div>
-                <div>
-                  <label for="contactField">Телефон или Telegram <span style="color:var(--warn)">*</span></label>
-                  <input id="contactField" name="contact" autocomplete="tel" placeholder="+7… или @username" required />
-                </div>
-              </div>
-
-              <div>
-                <label for="place">Заведение / компания (опционально)</label>
-                <input id="place" name="place" placeholder="Например: кафе, ресторан, сеть" />
-              </div>
-
-              <div>
-                <label for="comment">Комментарий (опционально)</label>
-                <textarea id="comment" name="comment" placeholder="Например: нужны 6 поставщиков, хотим контроль стопов и оптимизацию запасов"></textarea>
-              </div>
-
-              <button class="btn primary" type="submit">Запросить демо</button>
-              <p class="fineprint">
-                Нажимая кнопку, вы соглашаетесь на обработку контактных данных для связи по заявке.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
+        
     <footer>
       <div class="container">
         <div class="footer-grid">
@@ -917,9 +846,8 @@
           </div>
 
           <div style="display:grid; gap:8px;">
-            <!-- ЗАМЕНИТЕ НА ВАШИ КОНТАКТЫ -->
-            <a href="mailto:hello@iirest.ru">hello@iirest.ru</a>
-            <a href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a href="mailto:dkruglov@outlook.com">dkruglov@outlook.com</a>
+            <a href="https://t.me/tabascoden" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </div>
       </div>
@@ -963,22 +891,33 @@
 Контакт: ${contact}
 Заведение: ${place || '-'}
 Комментарий: ${comment || '-'}`;
+        const subject = 'Демо iirest';
+        const mailtoLink = `mailto:dkruglov@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+        const telegramLink = `https://t.me/share/url?url=&text=${encodeURIComponent(text)}`;
 
         // Show success
         success.style.display = 'block';
         success.scrollIntoView({behavior:'smooth', block:'center'});
+        success.innerHTML = `Спасибо! Заявка принята.<br />
+          <span class="note" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;">
+            Мы уже получили данные. Для быстрой отправки можно открыть:
+          </span>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn small" href="${mailtoLink}">Email</a>
+            <a class="btn small" href="${telegramLink}" target="_blank" rel="noopener noreferrer">Telegram</a>
+          </div>`;
 
         // Best-effort copy
         try {
           await navigator.clipboard.writeText(text);
-          success.textContent = 'Спасибо! Заявка принята. Текст заявки скопирован в буфер — можно вставить в Telegram/почту.';
+          success.insertAdjacentHTML('beforeend', '<div class="note" style="margin-top:10px;">Текст заявки скопирован в буфер — можно вставить в Telegram/почту.</div>');
         } catch (err) {
-          success.textContent = 'Спасибо! Заявка принята. (Если нужно, скопируйте данные вручную — мы скоро свяжемся.)';
+          success.insertAdjacentHTML('beforeend', '<div class="note" style="margin-top:10px;">Если нужно, скопируйте данные вручную — мы скоро свяжемся.</div>');
           console.log(err);
         }
 
         // Optional: open mail client (uncomment if you want)
-        // window.location.href = 'mailto:hello@iirest.ru?subject=' + encodeURIComponent('Демо iirest') + '&body=' + encodeURIComponent(text);
+        // window.location.href = mailtoLink;
 
         form.reset();
       });
